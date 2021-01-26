@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Categoria;
+use App\Models\Pedido;
 use Illuminate\Http\Request;
 
-class CategoriaController extends Controller
+class PedidoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        // listar
+        //
     }
 
     /**
@@ -24,7 +24,7 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        // mostrar el formulario de creacion
+        //
     }
 
     /**
@@ -35,53 +35,51 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        // guardar los datos en la base de datos
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Categoria  $categoria
+     * @param  \App\Models\Pedido  $pedido
      * @return \Illuminate\Http\Response
      */
-    public function show(Categoria $categoria)
+    public function show(Pedido $pedido)
     {
-        // mostrar un recurso
-        // Categoria::find($id)
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Categoria  $categoria
+     * @param  \App\Models\Pedido  $pedido
      * @return \Illuminate\Http\Response
      */
-    public function edit(Categoria $categoria)
+    public function edit(Pedido $pedido)
     {
-        // Cargar el formulario de Editar 
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Categoria  $categoria
+     * @param  \App\Models\Pedido  $pedido
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Categoria $categoria)
+    public function update(Request $request, Pedido $pedido)
     {
-        // Modificar los datos en la base de datos
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Categoria  $categoria
+     * @param  \App\Models\Pedido  $pedido
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Categoria $categoria)
+    public function destroy(Pedido $pedido)
     {
-        // Eliminar la categoria
-        // $categoria->id
+        //
     }
 }
