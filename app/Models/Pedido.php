@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Pedido extends Model
 {
     use HasFactory;
+
+    /*protected $primaryKey = "idped";
+    protected $typeKey = "string";
+    protected $incrementig = false;*/
 }
