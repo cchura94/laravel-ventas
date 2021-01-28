@@ -15,6 +15,8 @@ class CategoriaController extends Controller
     public function index()
     {
         // listar
+        $categorias = Categoria::paginate(10);
+        return view("admin.categoria.index", compact('categorias'));
     }
 
     /**
@@ -35,7 +37,18 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
+        // Validacion del lado del servidor
+        $request->validate([
+            "nombre" => "required"
+        ]);
+        // JSON
         // guardar los datos en la base de datos
+        $cat = new Categoria;
+        $cat->nombre = $request->nombre;
+        $cat->detalle = $request->detalle;
+        $cat->save();
+
+        return redirect("/categoria")->with("mensaje", "La categoria se ha registrado Correctamente");
     }
 
     /**
@@ -68,9 +81,21 @@ class CategoriaController extends Controller
      * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Categoria $categoria)
+    public function update(Request $request, $id)
     {
         // Modificar los datos en la base de datos
+        // Validacion del lado del servidor
+        $request->validate([
+            "nombre" => "required"
+        ]);
+        // JSON
+        // guardar los datos en la base de datos
+        $categoria = Categoria::find($id);
+        $categoria->nombre = $request->nombre;
+        $categoria->detalle = $request->detalle;
+        $categoria->save();
+
+        return redirect("/categoria")->with("mensaje", "La categoria se ha modificado Correctamente");
     }
 
     /**
@@ -79,9 +104,13 @@ class CategoriaController extends Controller
      * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Categoria $categoria)
+    public function destroy($id)
     {
         // Eliminar la categoria
         // $categoria->id
+        $categoria = Categoria::find($id);
+        $categoria->delete();
+
+        return redirect("/categoria")->with("mensaje", "La categoria se ha eliminado Correctamente");
     }
 }
