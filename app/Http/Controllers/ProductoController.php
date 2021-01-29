@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Producto;
+use App\Models\Categoria;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProductoController extends Controller
 {
@@ -14,7 +16,8 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        return view("admin.producto.listar");
+        $productos = Producto::paginate(10);
+        return view("admin.producto.listar", compact('productos'));
     }
 
     /**
@@ -24,7 +27,8 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        return view("admin.producto.crear");
+        $categorias = Categoria::All();
+        return view("admin.producto.crear", compact('categorias'));
     }
 
     /**
@@ -35,7 +39,38 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $reglas = [
+            'nombre' => 'required|unique:productos|max:200',
+            'cantidad' => 'required',
+        ];
+        $validator = Validator::make($request->all(), $reglas);
+
+        if ($validator->fails()) {
+            return redirect('/producto/create')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        /*
+        //return back()->with('datos',$request);
+        Categoria::findorFail($request->categoria_id);
+        //Validar
+        $reglas = [
+            "nombre" => "required|min:2|max:200|unique:productos",
+            
+        ];
+         $validator = $request->validate($reglas);*/
+
+        //guardar en la base de datos
+        $prod = new Producto;
+        $prod->nombre = $request->nombre;
+        $prod->precio = $request->precio;
+        $prod->cantidad = $request->cantidad;
+        $prod->descripcion = $request->descripcion;
+        $prod->categoria_id = $request->categoria_id;
+        $prod->save();
+
+        return redirect("/producto")->with("mensaje", "Producto Registrado");
     }
 
     /**
@@ -44,9 +79,12 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function show(Producto $producto)
+    public function show($id)
     {
         //
+        $producto = Producto::findOrFail($id);
+
+        return view("admin.producto.mostrar", compact("producto"));
     }
 
     /**
@@ -55,9 +93,11 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function edit(Producto $producto)
+    public function edit($id)
     {
-        //
+        $producto = Producto::findOrFail($id);
+
+        return view("admin.producto.editar", compact("producto"));
     }
 
     /**
@@ -67,9 +107,29 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Producto $producto)
+    public function update(Request $request, $id)
     {
-        //
+        $reglas = [
+            'nombre' => 'required|unique:productos|max:200',
+            'cantidad' => 'required',
+        ];
+        $validator = Validator::make($request->all(), $reglas);
+
+        if ($validator->fails()) {
+            return redirect('/producto/create')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $prod = Producto::find($id);
+        $prod->nombre = $request->nombre;
+        $prod->precio = $request->precio;
+        $prod->cantidad = $request->cantidad;
+        $prod->descripcion = $request->descripcion;
+        $prod->categoria_id = $request->categoria_id;
+        $prod->save();
+
+        return redirect("/producto")->with("mensaje", "Producto Modificado");
     }
 
     /**
@@ -78,8 +138,10 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Producto $producto)
+    public function destroy($id)
     {
-        //
+        $producto = Producto::find($id);
+        $producto->delete();
+        return redirect("/producto")->with("mensaje", "Producto Eliminado");
     }
 }

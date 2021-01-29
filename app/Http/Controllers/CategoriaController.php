@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categoria;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CategoriaController extends Controller
 {
@@ -27,6 +28,7 @@ class CategoriaController extends Controller
     public function create()
     {
         // mostrar el formulario de creacion
+        return "hola";
     }
 
     /**
@@ -37,10 +39,20 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        // Validacion del lado del servidor
-        $request->validate([
-            "nombre" => "required"
+        $validator = Validator::make($request->all(), [
+            'nombre' => 'required|unique:categorias|max:30',
+
         ]);
+
+        if ($validator->fails()) {
+            return redirect('/categoria')
+                ->withErrors($validator)
+                ->withInput();
+        }
+        // Validacion del lado del servidor
+        /*$request->validate([
+            "nombre" => "required"
+        ]);*/
         // JSON
         // guardar los datos en la base de datos
         $cat = new Categoria;

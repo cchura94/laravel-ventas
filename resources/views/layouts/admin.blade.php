@@ -824,6 +824,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('adminlte/dist/js/demo.js') }}"></script>
 
+    @yield('js')
 </body>
 
 </html>

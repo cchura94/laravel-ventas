@@ -23,15 +23,27 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+
+            @endif
             <form action="{{ route('categoria.store') }}" method="post">
                 <div class="modal-body">
                     @csrf
 
                     <label for="">NOMBRE:</label>
-                    <input type="text" name="nombre" class="form-control">
-
+                    <input type="text" name="nombre" class="form-control @error('nombre') is-invalid @enderror" value="{{ old('nombre') }}">
+                    @error('nombre')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                     <label for="">DETALLE:</label>
-                    <textarea name="detalle" id="" class="form-control"></textarea>
+                    <textarea name="detalle" id="" class="form-control">{{ old('detalle') }}</textarea>
 
                 </div>
                 <div class="modal-footer">
@@ -137,4 +149,12 @@
 </table>
 
 {{ $categorias->links() }}
+@endsection
+
+@section('js')
+@if($errors->any())
+<script>
+    $('#exampleModal').modal('show')
+</script>
+@endif
 @endsection
