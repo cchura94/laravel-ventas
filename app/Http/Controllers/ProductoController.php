@@ -14,9 +14,15 @@ class ProductoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $productos = Producto::paginate(10);
+        if ($request->buscar) {
+            $productos = Producto::where('nombre', 'like', '%' . $request->buscar . '%')
+                ->orWhere('cantidad', 'like', '%' . $request->buscar . '%')
+                ->paginate(10);
+        } else {
+            $productos = Producto::paginate(10);
+        }
         return view("admin.producto.listar", compact('productos'));
     }
 
@@ -42,6 +48,7 @@ class ProductoController extends Controller
         $reglas = [
             'nombre' => 'required|unique:productos|max:200',
             'cantidad' => 'required',
+            'estado' => 'required'
         ];
         $validator = Validator::make($request->all(), $reglas);
 
@@ -68,6 +75,7 @@ class ProductoController extends Controller
         $prod->cantidad = $request->cantidad;
         $prod->descripcion = $request->descripcion;
         $prod->categoria_id = $request->categoria_id;
+        $prod->estado = $request->estado;
         $prod->save();
 
         return redirect("/producto")->with("mensaje", "Producto Registrado");
