@@ -77,6 +77,7 @@
             <td>{{ $cat->nombre }}</td>
             <td>{{ $cat->detalle }}</td>
             <td>
+                <a href="{{ route('mostrar_productos', $cat->id) }}" class="btn btn-outline btn-success btn-xs">MOSTRAR PRODUCTOS</a>
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#editarModal{{ $cat->id }}">
                     editar

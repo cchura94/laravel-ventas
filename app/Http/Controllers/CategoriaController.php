@@ -125,4 +125,10 @@ class CategoriaController extends Controller
 
         return redirect("/categoria")->with("mensaje", "La categoria se ha eliminado Correctamente");
     }
+
+    public function categoria_por_producto($id)
+    {
+        $categoria = Categoria::find($id);
+        return view("admin.categoria.mostrar_prod", compact('categoria'));
+    }
 }

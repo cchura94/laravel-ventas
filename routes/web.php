@@ -26,6 +26,8 @@ Route::get('/', function () {
 Route::get('/admin', function () {
     return view('inicio');
 });
+
+Route::get("/admin/categoria/{id}/productos", [CategoriaController::class, 'categoria_por_producto'])->name("mostrar_productos");
 // Rutas con recursos
 
 Route::Resources([

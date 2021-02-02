@@ -12,4 +12,14 @@ class Pedido extends Model
     /*protected $primaryKey = "idped";
     protected $typeKey = "string";
     protected $incrementig = false;*/
+
+    public function cliente()
+    {
+        return $this->belongsTo("App\Models\Cliente");
+    }
+
+    public function productos()
+    {
+        return $this->belongsToMany("App\Models\Producto");
+    }
 }

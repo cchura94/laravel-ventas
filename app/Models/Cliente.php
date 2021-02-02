@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Cliente extends Model
 {
     use HasFactory;
+
+    public function pedidos()
+    {
+        return $this->hasMany("App\Models\Pedido");
+    }
+
+    public function user()
+    {
+        return $this->hasOne("App\Models\User");
+    }
 }
