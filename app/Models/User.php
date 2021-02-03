@@ -11,6 +11,8 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    protected $table = "usuarios";
+
     //$db_connexion = ""
 
     /**
@@ -19,9 +21,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'usuario',
+        //'email',
+        'clave',
     ];
 
     /**
@@ -51,5 +53,10 @@ class User extends Authenticatable
     public function cliente()
     {
         return $this->belongsTo("App\Models\Cliente");
+    }
+
+    public function getAuthPassword()
+    {
+        return $this->clave;
     }
 }
