@@ -49,6 +49,7 @@
 
 @section('contenedor')
 
+{!! QrCode::size(150)->generate('PEDIDO') !!}
 <form action="{{ route('pedido.store') }}" method="post">
     @csrf
     <div class="card">

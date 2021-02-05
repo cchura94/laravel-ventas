@@ -12,6 +12,10 @@ use Illuminate\Http\Request;
 
 class PedidoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'role:cajero']);
+    }
     /**
      * Display a listing of the resource.
      *

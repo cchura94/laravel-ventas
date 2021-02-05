@@ -372,6 +372,7 @@
 
                     </ul>
                 </nav>
+                {!! QrCode::size(150)->generate('Mi EMPRESA') !!}
                 <!-- /.sidebar-menu -->
             </div>
             <!-- /.sidebar -->

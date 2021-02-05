@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Validator;
 
 class ProductoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'role:admin'])->except("create");
+    }
     /**
      * Display a listing of the resource.
      *
